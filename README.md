@@ -4,7 +4,7 @@
 
 This is a test SIR model based on Ottar's book Epidemics chapter 2.
 It's a simple SIR model with births and deaths
-
+It uses fractional populations.
 ```math
 \begin{align}
 \frac{dS}{dt} &= \mu (N - S) -\beta S \frac{I}{N} \\
@@ -19,9 +19,9 @@ It's a simple SIR model with births and deaths
 \beta &= 2 \\
 \gamma &= \frac{1}{2} \\\\
 
-N &= 1000 \\
-S_0 &= 999.0 \\
-I_0 &= 1.0 \\
+N &= 1 \\
+S_0 &= 0.99 \\
+I_0 &= 0.1 \\
 R_0 &= 0.0
 \end{align}
 ```
