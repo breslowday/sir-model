@@ -12,13 +12,14 @@ sirmod <- function(t, y, parms) {
   # Pull parameter values from parms vector
   beta <- parms["beta"]
   mu <- parms["mu"]
+  nu <- parms["nu"] #death
   gamma <- parms["gamma"]
   N <- parms["N"]
   
   # Define equations
-  dS <- mu * (N  - S)  - beta * S * I / N
-  dI <- beta * S * I / N - (mu + gamma) * I
-  dR <- gamma * I - mu * R
+  dS <- mu*(S+I+R)  - beta * S * I / N - nu*(S/(S+I+R))
+  dI <- beta * S * I / N - (gamma) * I - nu*(I/(S+I+R))
+  dR <- gamma * I - nu*(R/(S+I+R))
   res <- c(dS, dI, dR)
   
   # Return list of gradients
@@ -26,8 +27,8 @@ sirmod <- function(t, y, parms) {
 }
 
 
-times <- seq(0, 1000, by = 1/10)
-parms <- c(mu = 0.01, N = 1, beta =  1.01, gamma = 1/1.5)
+times <- seq(0, 1000, by = 1)
+parms <- c(mu = 0.01, nu = 0.01, N = 1, beta = 1.001, gamma = 1/12)
 start <- c(S = 0.999, I = 0.001, R = 0)
 
 out <- ode(y = start, times = times, func = sirmod, parms = parms)
